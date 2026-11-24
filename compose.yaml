@@ -1,0 +1,30 @@
+services:
+  api:
+    build: .
+    ports: ["3000:3000"]
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASS: postgres
+      DB_NAME: roles-y-usuarios
+      DB_SYNC: "false"
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRES_IN: 2m
+      JWT_REFRESH_EXPIRES_IN: 7d
+    depends_on: [db]
+
+  db:
+    image: postgres:17-alpine
+    container_name: roles-y-usuarios_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: roles-y-usuarios
+    ports: ["5433:5432"]
+    volumes:
+      - datos:/var/lib/postgresql/data
+      - ./db:/docker-entrypoint-initdb.d
+
+volumes:
+  datos:
