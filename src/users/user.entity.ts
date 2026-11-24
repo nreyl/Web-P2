@@ -1,12 +1,4 @@
-import { Exclude } from 'class-transformer';
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  JoinTable,
-  ManyToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Role } from '../roles/role.entity.js';
 
 @Entity('users')
@@ -17,8 +9,7 @@ export class User {
   @Column({ type: 'varchar', unique: true })
   email: string;
 
-  @Exclude()
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', select: false })
   password: string;
 
   @Column({ type: 'varchar', nullable: true })
@@ -36,8 +27,8 @@ export class User {
   @ManyToMany(() => Role, (role) => role.users)
   @JoinTable({
     name: 'users_roles',
-    joinColumn: { name: 'user_id' },
-    inverseJoinColumn: { name: 'role_id' },
+    joinColumn: { name: 'user_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'role_id', referencedColumnName: 'id' },
   })
   roles: Role[];
 }

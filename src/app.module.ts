@@ -6,6 +6,8 @@ import { AuthorizationModule } from '@nestjs/authorization';
 import { UsersModule } from './users/users.module.js';
 import { RolesModule } from './roles/roles.module.js';
 import { AuthModule } from './auth/auth.module.js';
+import { ParkingsModule } from './parkings/parkings.module.js';
+import { ReservationsModule } from './reservations/reservations.module.js';
 
 @Module({
   imports: [
@@ -43,6 +45,8 @@ import { AuthModule } from './auth/auth.module.js';
     UsersModule,
     RolesModule,
     AuthModule,
+    ParkingsModule,
+    ReservationsModule,
   ],
 })
 export class AppModule {}
